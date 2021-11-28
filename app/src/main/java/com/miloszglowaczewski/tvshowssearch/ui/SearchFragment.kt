@@ -14,9 +14,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.miloszglowaczewski.tvshowssearch.SearchViewModel
 import com.miloszglowaczewski.tvshowssearch.TvShowsAdapter
 import com.miloszglowaczewski.tvshowssearch.databinding.FragmentSearchBinding
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class SearchFragment : Fragment() {
 
     private lateinit var binding: FragmentSearchBinding

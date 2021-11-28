@@ -5,20 +5,21 @@ import androidx.lifecycle.viewModelScope
 import com.miloszglowaczewski.tvshowssearch.repositories.Resource
 import com.miloszglowaczewski.tvshowssearch.repositories.TvShowsRepository
 import com.miloszglowaczewski.tvshowssearch.ui.SearchState
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 data class TvShowModel(
     val id: Long,
     val title: String
 )
 
-
-
-class SearchViewModel(
-    private val repository: TvShowsRepository = TvShowsRepository()
+@HiltViewModel
+class SearchViewModel @Inject constructor(
+    private val repository: TvShowsRepository
 ) : ViewModel() {
 
     private val minCharsToSearch = 3
@@ -47,13 +48,12 @@ class SearchViewModel(
             _state.value = SearchState.Loading
 
             val result = repository.searchTvShows(query)
-            _state.value = when(result) {
+            _state.value = when (result) {
                 is Resource.Failed -> SearchState.Error(result.error)
                 is Resource.Success -> SearchState.Data(result.data)
             }
         }
     }
-
 
 
 }

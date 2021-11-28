@@ -9,14 +9,17 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import java.net.UnknownHostException
+import javax.inject.Inject
 
 
-class TvShowsRepository {
+class TvShowsRepository @Inject constructor(
+    private val client: TvMazeApi
+) {
 
     suspend fun searchTvShows(query: String): Resource<List<TvShowModel>> {
 
         try {
-            val shows = createClient().searchTvShows(query)
+            val shows = client.searchTvShows(query)
                 .map { TvShowModel(
                     id = it.show.id,
                     title = it.show.name
@@ -30,25 +33,6 @@ class TvShowsRepository {
             Log.e("TvShowsRepository", "Failed to search tv shows", e)
             return Resource.Failed("Unknown error, please check your internet connection.")
         }
-    }
-
-    private fun createClient(): TvMazeApi {
-
-        val mosh = Moshi.Builder().build()
-
-        return Retrofit.Builder()
-            .baseUrl("https://api.tvmaze.com")
-            .addConverterFactory(MoshiConverterFactory.create(mosh))
-            .client(
-                OkHttpClient.Builder()
-                    .addInterceptor(
-                        HttpLoggingInterceptor().apply {
-                            level = HttpLoggingInterceptor.Level.HEADERS
-                        })
-                    .build()
-            )
-            .build()
-            .create(TvMazeApi::class.java)
     }
 
 }
