@@ -1,4 +1,4 @@
-package com.miloszglowaczewski.tvshowssearch
+package com.miloszglowaczewski.tvshowssearch.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

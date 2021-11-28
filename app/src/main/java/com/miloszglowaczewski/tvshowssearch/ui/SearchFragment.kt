@@ -1,4 +1,4 @@
-package com.miloszglowaczewski.tvshowssearch
+package com.miloszglowaczewski.tvshowssearch.ui
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -11,6 +11,8 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.miloszglowaczewski.tvshowssearch.SearchViewModel
+import com.miloszglowaczewski.tvshowssearch.TvShowsAdapter
 import com.miloszglowaczewski.tvshowssearch.databinding.FragmentSearchBinding
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -44,13 +46,16 @@ class SearchFragment : Fragment() {
                         is SearchState.Data -> {
                             listAdapter.submitList(state.tvShows)
                         }
+                        is SearchState.Error -> {
+                            listAdapter.submitList(emptyList())
+                        }
                         SearchState.Loading -> {
                             listAdapter.submitList(emptyList())
                         }
                         SearchState.WaitingForInput -> {
                             listAdapter.submitList(emptyList())
                         }
-                    }
+                    }.let {}
                 }
             }
         }

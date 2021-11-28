@@ -3,11 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".ui.MainActivity">
 
     <fragment
         android:id="@+id/searchFragment"
-        android:name="com.miloszglowaczewski.tvshowssearch.SearchFragment"
+        android:name="com.miloszglowaczewski.tvshowssearch.ui.SearchFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />
