@@ -1,6 +1,8 @@
 package com.miloszglowaczewski.tvshowssearch.di
 
 import com.miloszglowaczewski.tvshowssearch.network.TvMazeApi
+import com.miloszglowaczewski.tvshowssearch.repositories.TvShowsRepository
+import com.miloszglowaczewski.tvshowssearch.repositories.TvShowsRepositoryImpl
 import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
@@ -41,4 +43,8 @@ object MainModule {
             .create(TvMazeApi::class.java)
     }
 
+    @Provides
+    fun bindsTvShowsRepository(repositoryImpl: TvShowsRepositoryImpl): TvShowsRepository {
+        return repositoryImpl
+    }
 }
