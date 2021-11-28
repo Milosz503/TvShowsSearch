@@ -16,7 +16,9 @@ class TvShowsRepositoryImpl @Inject constructor(
             val shows = client.searchTvShows(query)
                 .map { TvShowModel(
                     id = it.show.id,
-                    title = it.show.name
+                    title = it.show.name,
+                    genres = it.show.genres,
+                    poster = it.show.image?.medium ?: "",
                 ) }
             return Resource.Success(shows)
 

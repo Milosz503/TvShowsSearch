@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/searchFragment"
-        android:name="com.miloszglowaczewski.tvshowssearch.ui.SearchFragment"
+        android:name="com.miloszglowaczewski.tvshowssearch.ui.search.SearchFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />

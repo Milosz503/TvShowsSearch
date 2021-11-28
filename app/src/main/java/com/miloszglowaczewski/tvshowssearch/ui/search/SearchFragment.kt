@@ -1,4 +1,4 @@
-package com.miloszglowaczewski.tvshowssearch.ui
+package com.miloszglowaczewski.tvshowssearch.ui.search
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -12,6 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.miloszglowaczewski.tvshowssearch.SearchViewModel
+import com.miloszglowaczewski.tvshowssearch.TvShowModel
 import com.miloszglowaczewski.tvshowssearch.TvShowsAdapter
 import com.miloszglowaczewski.tvshowssearch.databinding.FragmentSearchBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -46,16 +47,21 @@ class SearchFragment : Fragment() {
                 viewModel.state.collect { state ->
                     when (state) {
                         is SearchState.Data -> {
-                            listAdapter.submitList(state.tvShows)
+                            if(state.tvShows.isEmpty()) {
+                                showInfoResult("No results")
+                            } else {
+                                showItems(state.tvShows)
+                            }
+
                         }
                         is SearchState.Error -> {
-                            listAdapter.submitList(emptyList())
+                            showInfoResult(state.error)
                         }
                         SearchState.Loading -> {
-                            listAdapter.submitList(emptyList())
+                            showInfoResult("Loading...")
                         }
                         SearchState.WaitingForInput -> {
-                            listAdapter.submitList(emptyList())
+                            showInfoResult("Start typing to see results")
                         }
                     }.let {}
                 }
@@ -67,5 +73,21 @@ class SearchFragment : Fragment() {
                 viewModel.search(editable.toString())
             }
         }
+    }
+
+    private fun showInfoResult(info: String) {
+        listAdapter.submitList(emptyList())
+        binding.resultText.text = info
+
+        binding.resultList.visibility = View.INVISIBLE
+        binding.resultText.visibility = View.VISIBLE
+    }
+
+    private fun showItems(items: List<TvShowModel>) {
+        listAdapter.submitList(items)
+        binding.resultText.text = ""
+
+        binding.resultList.visibility = View.VISIBLE
+        binding.resultText.visibility = View.INVISIBLE
     }
 }

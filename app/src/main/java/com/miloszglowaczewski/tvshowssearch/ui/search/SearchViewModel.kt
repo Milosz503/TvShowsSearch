@@ -4,9 +4,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.miloszglowaczewski.tvshowssearch.repositories.Resource
 import com.miloszglowaczewski.tvshowssearch.repositories.TvShowsRepository
-import com.miloszglowaczewski.tvshowssearch.ui.SearchState
+import com.miloszglowaczewski.tvshowssearch.ui.search.SearchState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -14,7 +15,9 @@ import javax.inject.Inject
 
 data class TvShowModel(
     val id: Long,
-    val title: String
+    val title: String,
+    val genres: List<String>,
+    val poster: String,
 )
 
 @HiltViewModel
@@ -47,6 +50,8 @@ class SearchViewModel @Inject constructor(
         searchJob = viewModelScope.launch {
             _state.value = SearchState.Loading
 
+            // Delay search to filter out rapid query changes, avoids rate limiting
+            delay(500)
             val result = repository.searchTvShows(query)
             _state.value = when (result) {
                 is Resource.Failed -> SearchState.Error(result.error)

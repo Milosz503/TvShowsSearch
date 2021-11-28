@@ -1,4 +1,4 @@
-package com.miloszglowaczewski.tvshowssearch.ui
+package com.miloszglowaczewski.tvshowssearch.ui.search
 
 import com.miloszglowaczewski.tvshowssearch.TvShowModel
 

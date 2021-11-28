@@ -7,7 +7,7 @@ import org.mockito.Mockito.*
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.miloszglowaczewski.tvshowssearch.repositories.Resource
 import com.miloszglowaczewski.tvshowssearch.repositories.TvShowsRepository
-import com.miloszglowaczewski.tvshowssearch.ui.SearchState
+import com.miloszglowaczewski.tvshowssearch.ui.search.SearchState
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Assert
 import org.junit.Test

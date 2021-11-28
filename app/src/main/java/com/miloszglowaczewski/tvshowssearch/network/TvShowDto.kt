@@ -11,5 +11,12 @@ data class TvShowSearchDto(
 @JsonClass(generateAdapter = true)
 data class TvShowDto(
     val id: Long,
-    val name: String
+    val name: String,
+    val genres: List<String>,
+    val image: TvShowImageDto?,
+)
+
+@JsonClass(generateAdapter = true)
+data class TvShowImageDto(
+    val medium: String
 )
